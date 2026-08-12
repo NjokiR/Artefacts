@@ -1,13 +1,13 @@
 import sqlite3
 
-class EvidenceDatabase: 
+class EvidenceDatabase:
 
     def __init__(self, database_path = "data/evidence.db"):
         self.database_path = database_path
         self.create_table()
 
     def connect(self):
-        return sqlite3.connect(self.database_path) 
+        return sqlite3.connect(self.database_path)
 
     def create_table(self):
         connection = self.connect()
@@ -24,9 +24,9 @@ class EvidenceDatabase:
                 prediction TEXT NOT NULL,
                 hash_value TEXT NOT NULL
             )
-        
+
         """)
-        
+
         connection.commit()
         connection.close()
 
@@ -35,24 +35,24 @@ class EvidenceDatabase:
         connection = self.connect()
 
         cursor = connection.cursor()
-        cursor.execute(""" 
+        cursor.execute("""
             INSERT INTO evidence (
                 message_id,
-                user_id, 
-                timestamp, 
-                message, 
-                prediction, 
+                user_id,
+                timestamp,
+                message,
+                prediction,
                 hash_value
             )
             VALUES (?, ?, ?, ?, ?, ?)
         """, (
-            evidence["message_id"], 
+            evidence["message_id"],
             evidence["user_id"],
             evidence["timestamp"],
             evidence["message"],
             evidence["prediction"],
             hash_value
-        )) 
+        ))
 
         connection.commit()
         connection.close()
@@ -63,19 +63,43 @@ class EvidenceDatabase:
 
         cursor = connection.cursor()
 
-        cursor.execute(""" 
+        cursor.execute("""
             SELECT
-                message_id, 
+                message_id,
                 user_id,
                 timestamp,
                 message,
-                prediction, 
+                prediction,
                 hash_value
-            FROM evidence    
-        """)   
+            FROM evidence
+        """)
 
         records = cursor.fetchall()
 
         connection.close()
 
-        return records   
+        return records
+
+    def get_evidence_by_id(self, message_id):
+
+        connection = self.connect()
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                message_id,
+                user_id,
+                timestamp,
+                message,
+                prediction,
+                hash_value
+            FROM evidence
+            WHERE message_id = ?
+        """, (message_id,))
+
+        record = cursor.fetchone()
+
+        connection.close()
+
+        return record
