@@ -3,8 +3,8 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
-    classification_report,
-    confusion_matrix
+    classification_report as sklearn_classification_report,
+    confusion_matrix as sklearn_confusion_matrix
 )
 
 class ModelEvaluator:
@@ -47,7 +47,7 @@ class ModelEvaluator:
         for each cyberbullying category.
         """
 
-        return classification_report(
+        return sklearn_classification_report(
             y_true,
             y_pred,
             zero_division=0
@@ -59,7 +59,7 @@ class ModelEvaluator:
         correct and incorrect predictions.
         """
 
-        return confusion_matrix(
+        return sklearn_confusion_matrix(
             y_true,
             y_pred
         )    
