@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cyberbullying Forensics System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Cyberbullying Forensics System</h1>
+
+            <p>
+                Analyse a message for potential cyberbullying
+                and preserve forensic evidence.
+            </p>
+        </header>
+
+        <main>
+
+            <section class="input-section">
+
+                <h2>Message Analysis</h2>
+
+                <p>
+                    Enter the message you would like the system
+                    to analyse.
+                </p>
+
+                <!-- USER INPUT FORM STARTS HERE -->
+
+                <form action="/predict" method="POST">
+
+                    <label for="message">
+                        Message to analyse:
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="8"
+                        placeholder="Type or paste the message here..."
+                        required></textarea>
+
+                    <button type="submit">
+                        Analyse Message
+                    </button>
+
+                </form>
+
+                <!-- USER INPUT FORM ENDS HERE -->
+
+            </section>
+
+        </main>
+
+        <footer>
+
+            <p>
+                Cyberbullying Forensics System
+            </p>
+
+            <p>
+                Machine Learning Detection &amp;
+                Digital Forensic Evidence Preservation
+            </p>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import joblib
 
 from modules.data_loader import DataLoader
@@ -31,33 +31,27 @@ tfidf = joblib.load(TFIDF_PATH)
 # HOME ROUTE
 
 @app.route("/")
+
 def home():
-    # Load the dataset
-    df = loader.load_dataset(DATASET_PATH)
+    return  render_template("index.html")
 
-    # Basic dataset information
-    rows = len(df)
-    columns = df.columns.tolist()
-
-    return{
-        "message": "Cyberbullying Forensics System",
-        "rows": rows,
-        "columns": columns
-    }
-
-# PREDICTION ROUTE
+# Prediction
 
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    data = request.get_json()
-
-    message = data.get("message", "")
+    # Accept either JSON requests (API) or HTML from submission.
+    if request.is_json:
+        data = request.get_json()
+        message = data.get("message", "")
+    else:
+        message = request.form.get("message", "")
 
     if not message:
-        return jsonify({
-            "error": "Message is required"
-        }), 400
+        if request.is_json:
+            return jsonify({
+                "error": "Message is required"
+            }), 400
 
     # Convert message into TF-IDF features
     features = tfidf.transform([message])
@@ -80,15 +74,27 @@ def predict():
         hash_value
     )
 
-    # Return prediction and forensic evidence informaion
-    return jsonify({
-        "message": evidence["message"],
-        "prediction": evidence["prediction"],
-        "message_id": evidence["message_id"],
-        "user_id": evidence["user_id"],
-        "timestamp": str(evidence["timestamp"]),
-        "hash_value": hash_value
-    })
+    # Keep the existing JSON API response.
+    if request.is_json:
+        return jsonify({
+            "message": evidence["message"],
+            "prediction": evidence["prediction"],
+            "message_id": evidence["message_id"],
+            "user_id": evidence["user_id"],
+            "timestamp": str(evidence["timestamp"]),
+            "hash_value": hash_value
+        })
+
+    # Return the browser results page.
+    return render_template (
+        "results.html",
+        message = evidence["message"],
+        prediction = evidence["prediction"],
+        message_id = evidence["message_id"],
+        user_id = evidence["user_id"],
+        timestamp = str(evidence["timestamp"]),
+        hash_value = hash_value
+    )
 
 # RUN APPLICATION
 

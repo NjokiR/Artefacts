@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analysis Results - Cyberbullying Forensics System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Analysis Results</h1>
+            <p>
+                Cyberbullying Forensics System
+            </p>
+        </header>
+
+        <main>
+
+            {% if error %}
+
+                <div class="error">
+                    <h2>Error</h2>
+                    <p>{{ error }}</p>
+                </div>
+
+            {% else %}
+
+                <section class="result-section">
+
+                    <h2>Classification Result</h2>
+
+                    <p>
+                        <strong>Message:</strong>
+                    </p>
+
+                    <div class="message-box">
+                        {{ message }}
+                    </div>
+
+                    <p>
+                        <strong>Prediction:</strong>
+                        {{ prediction }}
+                    </p>
+
+                </section>
+
+                <section class="evidence-section">
+
+                    <h2>Forensic Evidence</h2>
+
+                    <p>
+                        <strong>Message ID:</strong>
+                        {{ message_id }}
+                    </p>
+
+                    <p>
+                        <strong>User ID:</strong>
+                        {{ user_id }}
+                    </p>
+
+                    <p>
+                        <strong>Timestamp:</strong>
+                        {{ timestamp }}
+                    </p>
+
+                    <p>
+                        <strong>SHA-256 Hash:</strong>
+                    </p>
+
+                    <div class="hash-box">
+                        {{ hash_value }}
+                    </div>
+
+                </section>
+
+                <div class="actions">
+
+                    <a href="/">
+                        Analyse Another Message
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </main>
+
+        <footer>
+            <p>
+                Cyberbullying Forensics System
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

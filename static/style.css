@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+header {
+    padding: 30px;
+    text-align: center;
+    background: #1f3c88;
+    color: white;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    font-size: 16px;
+}
+
+main {
+    padding: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background: #1f3c88;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #162d68;
+}
+
+.result-section,
+.evidence-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.result-section h2,
+.evidence-section h2 {
+    margin-top: 0;
+}
+
+.message-box,
+.hash-box {
+    padding: 15px;
+    background: #f4f6f8;
+    border-radius: 6px;
+    margin: 10px 0 20px;
+}
+
+.hash-box {
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.actions a {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 6px;
+    background: #1f3c88;
+    color: white;
+    text-decoration: none;
+}
+
+.actions a:hover {
+    background: #162d68;
+}
+
+.error {
+    padding: 20px;
+    border: 1px solid #d9534f;
+    border-radius: 8px;
+    background: #fdf2f2;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    color: #666;
+    font-size: 14px;
+}
