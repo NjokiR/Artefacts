@@ -1,7 +1,7 @@
 import pandas as pd 
 import joblib
 
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GroupShuffleSplit
 
 from modules.preprocessing import TextPreprocessor
 from modules.feature_extraction import FeatureExtractor
@@ -36,13 +36,24 @@ y = df["cyberbullying_type"]
 
 print("\n--- TRAIN/TEST SPLIT ---")
 
-x_train_text, x_test_text, y_train, y_test = train_test_split(
-    x_text,
-    y, 
-    test_size=0.2,
-    random_state=42,
-    stratify=y
+splitter = GroupShuffleSplit(
+    n_splits = 1,
+    test_size = 0.2,
+    random_state = 42
 )
+train_idx, test_idx = next(
+    splitter.split(
+        x_text,
+        y,
+        groups = df["tweet_text"]
+    )
+ )
+
+x_train_text = x_text.iloc[train_idx]
+x_test_text = x_text.iloc[test_idx]
+
+y_train = y.iloc[train_idx]
+y_test = y.iloc[test_idx]
 
 print("Training records:", len(x_train_text))
 print("Testing records:", len(x_test_text))
@@ -148,15 +159,15 @@ print("\n--- SAVING MODELS ---")
 
 joblib.dump(
     classifier.model,
-    "models/classifier.pk1"
+    "models/classifier.pkl"
 )
 
 joblib.dump(
     extractor.vectorizer, 
-    "models/tfidf.pk1"
+    "models/tfidf.pkl"
 )
 
-print("Classifier saved to models/clssifier.pk1")
-print("TF-IDF vectorizer saved to models/tfidf.pk1")
+print("Classifier saved to models/clssifier.pkl")
+print("TF-IDF vectorizer saved to models/tfidf.pkl")
 
 print("\n--- TRAINING COMPLETE ---")
